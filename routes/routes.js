@@ -70,8 +70,8 @@ router.post("/CreateUser", function (req, res) {
 //=============================================================================================
 
 
-router.put( '/updateUser', ( req, res ) => {
-    return User.update ( { TIN : req.body.TIN },
+router.put( '/updateUser/:TIN', ( req, res ) => {
+    return User.update ( { TIN : req.params.TIN },
         { $set: req.body } )
         .then ( ok => {
             return res.status ( 200 ).json( { message: "user's detail update" } ) ;
@@ -88,8 +88,8 @@ router.put( '/updateUser', ( req, res ) => {
 //=============================================================================================
 
 
-router.delete('/deleteUser/:name', (req, res) => {
-    return User.findOneAndRemove( { name: req.params.name } )
+router.delete('/deleteUser/:TIN', (req, res) => {
+    return User.findOneAndRemove( { TIN: req.params.TIN } )
         .then(ok => {
             return res.status( 200 ).json( { message: "user' deleted" } );
         })
