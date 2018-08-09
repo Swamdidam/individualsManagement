@@ -7,21 +7,21 @@
  Description:           Calling all dependences
 /********************************************************/
 
-require('dotenv').config();
+require( 'dotenv' ).config();
 
 
 
 const
-    express           	= require("express"),
-    methodOverride    	= require("method-override"),
-    log4js              = require('log4js'),
-    compress          	= require("compression"),
-    bodyParser          = require("body-parser"),
-    cookieParser    	  = require("cookie-parser"),
-    logger          	  = require("morgan"),
-    mongoose          	= require("mongoose"),
-    cors              	=require('cors'),
-    log 		            = require('./utils/logger').getLogger('APP');
+    express           	= require( "express" ),
+    methodOverride    	= require( "method-override" ),
+    log4js              = require( 'log4js' ),
+    compress          	= require( "compression" ),
+    bodyParser          = require( "body-parser" ),
+    cookieParser    	  = require( "cookie-parser" ),
+    logger          	  = require( "morgan" ),
+    mongoose          	= require( "mongoose" ),
+    cors              	= require( 'cors' ),
+    log 		            = require( './utils/logger' ).getLogger( 'APP' );
 
 const app = express();
 
@@ -33,13 +33,13 @@ const
 let db;
 
 
-app.set('port', port);
-app.set('env', env);
+app.set( 'port', port ) ;
+app.set( 'env', env ) ;
 
-const routes = require('./routes/routes');
+const routes = require( './routes/routes' ) ;
 
 
-mongoose.Promise = require('bluebird');
+mongoose.Promise = require( 'bluebird' );
 
 var options = {
   socketTimeoutMS: 0,
@@ -65,16 +65,16 @@ process.on('SIGINT', () => {
   });
 });
 
-app.use(log4js.connectLogger(log, { level: 'auto' }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use( log4js.connectLogger( log, { level: 'auto' } ) ) ;
+app.use( bodyParser.json() ) ;
+app.use( bodyParser.urlencoded( { extended: true } ) ) ;
 
 //Header to permit cors calls
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin,X-Requsted-With,Content-Type, Accept,Authorization');
-  if(req.method === 'OPTIONS') {
+app.use( ( req, res, next ) => {
+  res.header( 'Access-Control-Allow-Origin', '*' ) ;
+  res.header( 'Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,PUT,POST,DELETE' ) ;
+  res.header( 'Access-Control-Allow-Headers', 'Origin,X-Requsted-With,Content-Type, Accept,Authorization' ) ;
+  if( req.method === 'OPTIONS' ) {
       res.status(200).end();
   }
   else {
@@ -82,10 +82,10 @@ app.use((req, res, next) => {
   }
 });
 
-app.get('/', (req, res) => {
-    return res.status(200).json({info:"welcome to App home"});
+app.get( '/', (req, res) => {
+    return res.status(200).json( { info:"welcome to App home" } ) ;
 })
-app.use('/', routes);
+app.use( '/' , routes ) ;
 
 
 

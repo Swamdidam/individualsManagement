@@ -11,14 +11,14 @@
 */
 
 const
-    express  = require('express'),
-    log      = require('../utils/logger').getLogger('routes'),
-    _        = require('lodash'),
-    bcrypt   = require('bcryptjs'),
-    crypto   = require('crypto'),
-    mongoose = require('mongoose'),
-    request  = require('request'),
-    User     = require('../models/User');
+    express  = require( 'express' ),
+    log      = require( '../utils/logger').getLogger( 'routes' ) ,
+    _        = require( 'lodash' ) ,
+    bcrypt   = require( 'bcryptjs' ) ,
+    crypto   = require( 'crypto' ) ,
+    mongoose = require( 'mongoose' ) ,
+    request  = require( 'request' ) ,
+    User     = require( '../models/User' ) ;
 
 
 
@@ -37,8 +37,7 @@ const router = express.Router();
 
 router.post("/CreateUser", function (req, res) {
 
-    
-//form
+    //form
     var form = {
         name: req.body.name,
         phone:req.body.phone,
@@ -52,38 +51,33 @@ router.post("/CreateUser", function (req, res) {
         emp_status:req.body.emp_status,
         occupation:req.body.occupation,
         work_place:req.body.work_place,
-        TIN:"PL" + req.body.LGA + tin  //bobby added LGA_RESPONDS to tin
+        // TIN:"PL" + req.body.LGA + generated_random_numbers 
     }
 
-    // ==================================================================
-    // Create user but first check if TIN is already registered    
-    //===================================================================
-
-   
-            return createUser.create(form)
-                .then(doc => {
-                    return res.status(200).json({message: "User created",doc:doc});
-                })
-                .catch(err=>{
-                    return res.status(500).json({message: "Could not create user", err: err});
-                })
+    return User.create( form )
+        .then(doc => {
+            return res.status( 200 ).json( { message: "User created",doc:doc } ) ;
+        })
+        .catch(err=>{
+            return res.status( 500 ).json( { message: "Could not create user", err: err } ) ;
+        })
 
   
 });
 
 //=============================================================================================
-// User login router
+// User Update router
 //=============================================================================================
 
 
-router.put('/updateUser', (req, res) => {
-    return User.update ( { "email" : req.body.email },
+router.put( '/updateUser', ( req, res ) => {
+    return User.update ( { TIN : req.body.TIN },
         { $set: req.body } )
         .then ( ok => {
-            return res.status ( 200 ).json ( { message: "user's detail update" } ) ;
+            return res.status ( 200 ).json( { message: "user's detail update" } ) ;
         })
         .catch(err => {
-            return res.status( 500 ).json ( { message: "Unfurtunately an error has occured" } ) ;
+            return res.status( 500 ).json( { message: "Unfurtunately an error has occured" } ) ;
 
         });
 });
@@ -94,13 +88,13 @@ router.put('/updateUser', (req, res) => {
 //=============================================================================================
 
 
-router.put('/deleteUser', (req, res) => {
-    return User.findOneAndRemove({ "TIN": req.body.TIN })
+router.delete('/deleteUser/:name', (req, res) => {
+    return User.findOneAndRemove( { name: req.params.name } )
         .then(ok => {
-            return res.status(200).json({message: "user' deleted"});
+            return res.status( 200 ).json( { message: "user' deleted" } );
         })
         .catch(err => {
-            return res.status(500).json({ message: "Unfurtunately an error has occured" });
+            return res.status( 500 ).json( { message: "Unfurtunately an error has occured" } ) ;
 
         });
 });
@@ -110,13 +104,13 @@ router.put('/deleteUser', (req, res) => {
 // Searching for a particular users
 //=============================================================================================
 
-router.get("/oneUser/:TIN", function (req, res) {
-    return User.find({TIN: req.params.TIN})
-        .then(doc => {
-            return res.status(200).json({message: "User created",doc:doc});
+router.get( "/oneUser/:TIN", function (req, res) {
+    return User.find( { TIN: req.params.TIN } )
+        .then( doc => {
+            return res.status( 200 ).json( { message: "User created",doc:doc } );
         })
-        .catch(err => {
-            return res.status(500).json({message: "Cannot find user", err: err});
+        .catch( err => {
+            return res.status( 500 ).json( { message: "Cannot find user", err: err } );
         })
       
   });
@@ -125,16 +119,16 @@ router.get("/oneUser/:TIN", function (req, res) {
 // Search all registered users
 //=============================================================================================
 
-router.get("/viewAllUsers", function (req, res) {
-    return User.find({})
-        .then(doc => {
-            return res.status(200).json({message: "User created",doc:doc});
-        })
+router.get( "/viewAllUsers", function (req, res) {
+    return User.find( {} )
+        .then( doc => {
+            return res.status( 200 ).json( { message: "User created", doc:doc } ) ;
+        } )
         .catch(err => {
-            return res.status(500).json({message: "Cannot display list", err: err});
-        })
+            return res.status( 500 ).json( { message: "Cannot display list", err: err } ) ;
+        } )
       
-  });
+  } ) ;
 
   
 //=============================================================================
