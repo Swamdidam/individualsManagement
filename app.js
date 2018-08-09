@@ -68,6 +68,7 @@ process.on('SIGINT', () => {
 app.use( log4js.connectLogger( log, { level: 'auto' } ) ) ;
 app.use( bodyParser.json() ) ;
 app.use( bodyParser.urlencoded( { extended: true } ) ) ;
+app.use('/uploads', express.static( 'uploads' ) ) ;
 
 //Header to permit cors calls
 app.use( ( req, res, next ) => {

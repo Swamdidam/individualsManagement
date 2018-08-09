@@ -18,7 +18,38 @@ const
     crypto   = require( 'crypto' ) ,
     mongoose = require( 'mongoose' ) ,
     request  = require( 'request' ) ,
-    User     = require( '../models/User' ) ;
+    User     = require( '../models/User' ) ,
+    multer   = require( 'multer' );
+
+//***************************************************
+// Configuring image for upload as profile photo   
+//***************************************************
+
+const storage  = multer.diskStorage( {
+    destination: function( req, file, cb ) {
+        cb( null, './uploads/')
+    },
+    filename: function( req, file, cb ){
+        cb( null, new Date().toISOString() + file.originalname ) ;
+    }   
+} ) ;
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || 'image/png'){
+        cb( null, true );
+    }
+    else {
+        cb( null, false)
+    }
+}
+
+const upload = multer( { 
+    storage: storage, 
+    limits:{
+    fileSize: 1024 * 1024 * 2 
+    },
+    fileFilter: fileFilter 
+} );
 
 
 
@@ -35,7 +66,7 @@ const router = express.Router();
 //============================================================================================
 
 
-router.post("/CreateUser", function (req, res) {
+router.post("/CreateUser", upload.single( 'profilePhoto' ), function (req, res) {
 
     //form
     var form = {
@@ -51,6 +82,7 @@ router.post("/CreateUser", function (req, res) {
         emp_status:req.body.emp_status,
         occupation:req.body.occupation,
         work_place:req.body.work_place,
+        profilePhoto:req.file.path,
         // TIN:"PL" + req.body.LGA + generated_random_numbers 
     }
 
@@ -70,8 +102,8 @@ router.post("/CreateUser", function (req, res) {
 //=============================================================================================
 
 
-router.put( '/updateUser', ( req, res ) => {
-    return User.update ( { TIN : req.body.TIN },
+router.put( '/updateUser/:TIN', ( req, res ) => {
+    return User.update ( { TIN : req.params.TIN },
         { $set: req.body } )
         .then ( ok => {
             return res.status ( 200 ).json( { message: "user's detail update" } ) ;
@@ -88,13 +120,13 @@ router.put( '/updateUser', ( req, res ) => {
 //=============================================================================================
 
 
-router.delete('/deleteUser/:name', (req, res) => {
-    return User.findOneAndRemove( { name: req.params.name } )
+router.delete('/deleteUser/:TIN', (req, res) => {
+    return User.findOneAndRemove( { TIN: req.params.name } )
         .then(ok => {
             return res.status( 200 ).json( { message: "user' deleted" } );
         })
         .catch(err => {
-            return res.status( 500 ).json( { message: "Unfurtunately an error has occured" } ) ;
+            return res.status( 500 ).json( { message: "Unfortunately an error has occured" } ) ;
 
         });
 });

@@ -68,7 +68,12 @@ const UserSchema = new mongoose.Schema({
     occupation: {
         type: String,
         required: [true, "Please add occupation"]
+    },
+    profilePhoto: {
+        type: String,
+        required: [true, "Please add profile photo"]
     }
+    
  
 });
 
