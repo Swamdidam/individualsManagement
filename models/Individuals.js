@@ -3,7 +3,7 @@
 /*********************************************************
  Author:                Swam Didam Bobby 
  Year:                  2018
- File Discription:      Model for end users
+ File Discription:      Model for Individuals
 /********************************************************/
 
 // model dependencies
@@ -13,7 +13,7 @@ const
 
 
 // MONGOOSE MODEL CONFIGURATION
-const UserSchema = new mongoose.Schema({
+const IndividualsSchema = new mongoose.Schema({
 
     
     name: {
@@ -77,6 +77,6 @@ const UserSchema = new mongoose.Schema({
  
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Individuals', IndividualsSchema);
 
 

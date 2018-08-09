@@ -33,6 +33,7 @@
     "mongoose": "^5.0.11",
     "mongoose-beautiful-unique-validation": "^6.0.0",
     "morgan": "*",
+    "multer": "^1.3.1",
     "promise": "^7.1.1",
     "supertest": "^3.0.0"
   }

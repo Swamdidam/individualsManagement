@@ -18,7 +18,7 @@ const
     crypto   = require( 'crypto' ) ,
     mongoose = require( 'mongoose' ) ,
     request  = require( 'request' ) ,
-    User     = require( '../models/User' ) ,
+    Individuals     = require( '../models/Individuals' ) ,
     multer   = require( 'multer' );
 
 //***************************************************
@@ -62,11 +62,11 @@ const router = express.Router();
 
 
 //============================================================================================
-// User signup, login, find ...
+// Individuals signup, login, find ...
 //============================================================================================
 
 
-router.post("/CreateUser", upload.single( 'profilePhoto' ), function (req, res) {
+router.post("/CreateIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
 
     //form
     var form = {
@@ -86,27 +86,27 @@ router.post("/CreateUser", upload.single( 'profilePhoto' ), function (req, res) 
         // TIN:"PL" + req.body.LGA + generated_random_numbers 
     }
 
-    return User.create( form )
+    return Individuals.create( form )
         .then(doc => {
-            return res.status( 200 ).json( { message: "User created",doc:doc } ) ;
+            return res.status( 200 ).json( { message: "Individuals created",doc:doc } ) ;
         })
         .catch(err=>{
-            return res.status( 500 ).json( { message: "Could not create user", err: err } ) ;
+            return res.status( 500 ).json( { message: "Could not create Individuals", err: err } ) ;
         })
 
   
 });
 
 //=============================================================================================
-// User Update router
+// Individuals Update router
 //=============================================================================================
 
 
-router.put( '/updateUser/:TIN', ( req, res ) => {
-    return User.update ( { TIN : req.params.TIN },
+router.put( '/updateIndividuals/:TIN', ( req, res ) => {
+    return Individuals.update ( { TIN : req.params.TIN },
         { $set: req.body } )
         .then ( ok => {
-            return res.status ( 200 ).json( { message: "user's detail update" } ) ;
+            return res.status ( 200 ).json( { message: "Individuals's detail update" } ) ;
         })
         .catch(err => {
             return res.status( 500 ).json( { message: "Unfurtunately an error has occured" } ) ;
@@ -116,14 +116,14 @@ router.put( '/updateUser/:TIN', ( req, res ) => {
 
 
 //=============================================================================================
-// Delete user router
+// Delete Individuals router
 //=============================================================================================
 
 
-router.delete('/deleteUser/:TIN', (req, res) => {
-    return User.findOneAndRemove( { TIN: req.params.name } )
+router.delete('/deleteIndividuals/:TIN', (req, res) => {
+    return Individuals.findOneAndRemove( { TIN: req.params.name } )
         .then(ok => {
-            return res.status( 200 ).json( { message: "user' deleted" } );
+            return res.status( 200 ).json( { message: "Individuals' deleted" } );
         })
         .catch(err => {
             return res.status( 500 ).json( { message: "Unfortunately an error has occured" } ) ;
@@ -133,28 +133,28 @@ router.delete('/deleteUser/:TIN', (req, res) => {
 
 
 //=============================================================================================
-// Searching for a particular users
+// Searching for a particular Individualss
 //=============================================================================================
 
-router.get( "/oneUser/:TIN", function (req, res) {
-    return User.find( { TIN: req.params.TIN } )
+router.get( "/oneIndividuals/:TIN", function (req, res) {
+    return Individuals.find( { TIN: req.params.TIN } )
         .then( doc => {
-            return res.status( 200 ).json( { message: "User created",doc:doc } );
+            return res.status( 200 ).json( { message: "Individuals created",doc:doc } );
         })
         .catch( err => {
-            return res.status( 500 ).json( { message: "Cannot find user", err: err } );
+            return res.status( 500 ).json( { message: "Cannot find Individuals", err: err } );
         })
       
   });
 
 //=============================================================================================
-// Search all registered users
+// Search all registered Individualss
 //=============================================================================================
 
-router.get( "/viewAllUsers", function (req, res) {
-    return User.find( {} )
+router.get( "/viewAllIndividualss", function (req, res) {
+    return Individuals.find( {} )
         .then( doc => {
-            return res.status( 200 ).json( { message: "User created", doc:doc } ) ;
+            return res.status( 200 ).json( { message: "Individuals created", doc:doc } ) ;
         } )
         .catch(err => {
             return res.status( 500 ).json( { message: "Cannot display list", err: err } ) ;
