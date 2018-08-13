@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
 /*********************************************************
- Author:                Swam Didam Bobby 
- Year:                  2018
- File Discription:      Model for Individuals
+ Created  by Swam Didam Bobby on 09/08/2018
+ Modified by Swam Didam Bobby on 13/08/2018
 /********************************************************/
 
 // model dependencies
+
 const
     mongoose                = require("mongoose"),
     bcrypt                  = require("bcryptjs");
@@ -53,12 +53,12 @@ const IndividualsSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: [true, "Select Gender"],
-        enum: ["Male", "Female", "Others"]
+        // enum: ["Male", "Female", "Others"]
     },
     emp_status: {
         type: String,
         required: [true, "Please select Employment status"],
-        enum: ["Self-employed", "Employed"]
+        // enum: ["Self-employed", "Employed"]
     },
     work_place: {
         type: String,

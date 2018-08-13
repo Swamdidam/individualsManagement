@@ -1,9 +1,8 @@
 'use strict';
 
 /*********************************************************
- Authors:               Swam Didam Bobby 
- Year:                  2018
- File Discription:      Routing processes
+ Created  by Swam Didam Bobby on 09/08/2018
+ Modified by Swam Didam Bobby on 13/08/2018
 /********************************************************/
 
 /**
@@ -18,7 +17,7 @@ const
     crypto          = require( 'crypto' ) ,
     mongoose        = require( 'mongoose' ) ,
     request         = require( 'request' ) ,
-    Individuals     = require( '../models/Individuals' ) ,
+    Individuals     = require( '../models/utils/IndividualsUtils' ) ,
     multer          = require( 'multer' );
 
 //***************************************************
@@ -59,28 +58,8 @@ const upload = multer( {
 
 const router = express.Router();
 
-router.post("/CreateIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
-
- //form
-
-    var form = {
-        name: req.body.name,
-        phone:req.body.phone,
-        DOB:req.body.DOB,
-        title: req.body.title,
-        res_address:req.body.res_address,
-        LGA:req.body.LGA,
-        state:req.body.state,
-        nationality: req.body.nationality,
-        gender:req. body.gender,
-        emp_status:req.body.emp_status,
-        occupation:req.body.occupation,
-        work_place:req.body.work_place,
-        profilePhoto:req.file.path,
-        TIN: req.body.TIN
-    }
-
-    return Individuals.create( form )
+router.post("/createIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
+    return Individuals.createIndividuals( req.body )
         .then(doc => {
             return res.status( 200 ).json( { message: "Individuals created",doc:doc } ) ;
         })
@@ -96,16 +75,15 @@ router.post("/CreateIndividuals", upload.single( 'profilePhoto' ), function (req
 //=============================================================================================
 
 
-router.put( '/updateIndividuals/:TIN', ( req, res ) => {
-    return Individuals.update ( { TIN : req.params.TIN },
-        { $set: req.body } )
-        .then ( ok => {
-            return res.status ( 200 ).json( { message: "Individuals's detail update" } ) ;
+router.put('/updateIndividuals', (req, res) => {
+    return Individuals.updateIndividuals(req.body.filter, req.body.update)
+        .then(doc => {
+            return res.status(200).json(doc);
         })
         .catch(err => {
-            return res.status( 500 ).json( { message: "Unfurtunately an error has occured" } ) ;
-
+            return res.status(error.code).json(error.msg);
         });
+
 });
 
 
@@ -114,13 +92,13 @@ router.put( '/updateIndividuals/:TIN', ( req, res ) => {
 //=============================================================================================
 
 
-router.delete('/deleteIndividuals/:TIN', (req, res) => {
-    return Individuals.findOneAndRemove( { TIN: req.params.name } )
+router.delete('/deleteIndividuals', (req, res) => {
+    return Individuals.deleteIndividuals( req.body )
         .then(ok => {
-            return res.status( 200 ).json( { message: "Individuals' deleted" } );
+            return res.json( { message: "Individuals' deleted" } );
         })
         .catch(err => {
-            return res.status( 500 ).json( { message: "Unfortunately an error has occured" } ) ;
+            return res.json( err ) ;
 
         });
 });
@@ -130,31 +108,30 @@ router.delete('/deleteIndividuals/:TIN', (req, res) => {
 // Searching for a particular Individualss
 //=============================================================================================
 
-router.get( "/oneIndividuals/:TIN", function (req, res) {
-    return Individuals.find( { TIN: req.params.TIN } )
-        .then( doc => {
-            return res.status( 200 ).json( { message: "Individuals created",doc:doc } );
+router.post('/getIndividuals', (req, res) => {
+
+    return Individuals.getIndividuals(req.body)
+        .then(doc => {
+           return res.json(doc);
         })
-        .catch( err => {
-            return res.status( 500 ).json( { message: "Cannot find Individuals", err: err } );
-        })
-      
-  });
+        .catch(err => {
+            return res.json({err:err});
+        });
+});
 
 //=============================================================================================
 // Search all registered Individualss
 //=============================================================================================
 
-router.get( "/viewAllIndividualss", function (req, res) {
-    return Individuals.find( {} )
-        .then( doc => {
-            return res.status( 200 ).json( { message: "Individuals created", doc:doc } ) ;
-        } )
+router.get('/getAllIndividuals', (req, res) => {
+    return Individuals.getAllIndividuals({})
+        .then(doc => {
+            return res.json({doc:doc});
+        })
         .catch(err => {
-            return res.status( 500 ).json( { message: "Cannot display list", err: err } ) ;
-        } )
-      
-  } ) ;
+            return res.json({err:err});
+        });
+  });
 
   
 //=============================================================================

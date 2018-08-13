@@ -1,16 +1,13 @@
 'use strict';
 
 /*********************************************************
- Author:                Swam Didam Bobby 
- Year:                  2018
- File Discription:      Server creation
+ Created  by Swam Didam Bobby on 09/08/2018
+ Modified by Swam Didam Bobby on 13/08/2018
 /********************************************************/
 
-//=============================================================================
 /**
  * module dependencies
  */
-//=============================================================================
 const
     http    = require( 'http' ) ,
     app     = require( './app' ) ,
