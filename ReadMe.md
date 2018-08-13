@@ -1,4 +1,4 @@
-# Person Management
+# Individual Management
 
 WHAT: This project is a microservice that manages Tax payers personal details.
 
