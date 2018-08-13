@@ -11,15 +11,15 @@
 */
 
 const
-    express  = require( 'express' ),
-    log      = require( '../utils/logger').getLogger( 'routes' ) ,
-    _        = require( 'lodash' ) ,
-    bcrypt   = require( 'bcryptjs' ) ,
-    crypto   = require( 'crypto' ) ,
-    mongoose = require( 'mongoose' ) ,
-    request  = require( 'request' ) ,
+    express         = require( 'express' ),
+    log             = require( '../utils/logger').getLogger( 'routes' ) ,
+    _               = require( 'lodash' ) ,
+    bcrypt          = require( 'bcryptjs' ) ,
+    crypto          = require( 'crypto' ) ,
+    mongoose        = require( 'mongoose' ) ,
+    request         = require( 'request' ) ,
     Individuals     = require( '../models/Individuals' ) ,
-    multer   = require( 'multer' );
+    multer          = require( 'multer' );
 
 //***************************************************
 // Configuring image for upload as profile photo   
@@ -59,92 +59,10 @@ const upload = multer( {
 
 const router = express.Router();
 
-
-
-//============================================================================================
-// Individuals signup, login, find ...
-//============================================================================================
-
-
 router.post("/CreateIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
 
-//********************************************************************************************
-//      Function for generating rendom numbers
-//********************************************************************************************
-    
-    function randomElement (array) {
-        return array[Math.floor(Math.random() * array.length)];
-                }
-                
-                var characters = '1234567890'.split(''),
-                    result = '';
-                for (var i = 0; i < 8; i++) {
-                    result += randomElement(characters);
-                }
+ //form
 
-            var tin = result;
-
-//********************************************************************************
-//      Function for returning LGA numeric code for TIN genration
-//********************************************************************************
-    function getLGA(LGA) {
-        let LGA_RESPONSE;
-        if(LGA == 'BARKIN LADI'){
-          LGA_RESPONSE = '01';
-        }
-        else if(LGA == 'BASSA'){
-          LGA_RESPONSE = '02';
-        }
-        else if(LGA == 'BOKKOS'){
-          LGA_RESPONSE = '03';
-        }
-        else if(LGA == 'JOS-EAST'){
-          LGA_RESPONSE = '04';
-        }
-        else if(LGA == 'JOS-NORTH'){
-          LGA_RESPONSE = '05';
-        }
-        else if(LGA == 'JOS-SOUTH'){
-          LGA_RESPONSE = '06';
-        }
-        else if(LGA == 'KANAM'){
-          LGA_RESPONSE = '07';
-        }
-        else if(LGA=='KANKE'){
-          LGA_RESPONSE = '08';
-        }
-        else if(LGA == 'LANGTANG NORTH'){
-          LGA_RESPONSE = '09';
-        }
-        else if(LGA == 'LANGTANG SOUTH'){
-          LGA_RESPONSE = '10';
-        }
-        else if(LGA == 'MANGU'){
-          LGA_RESPONSE = '11';
-        }
-        else if(LGA == 'MIKANG'){
-          LGA_RESPONSE = '12';
-        }
-        else if(LGA == 'PANKSHIN'){
-            LGA_RESPONSE = '13';
-        }
-        else if(LGA == "QUA'AN PAN"){
-        LGA_RESPONSE = '14';
-        }
-        else if(LGA == 'RYOM'){
-        LGA_RESPONSE = '15';
-        }
-        else if(LGA == 'SHENDAM'){
-        LGA_RESPONSE = '16';
-        }
-        else if(LGA == 'WASE'){
-        LGA_RESPONSE = '17';
-        }
-        
-        return LGA_RESPONSE;
-      }
-
-    //form
     var form = {
         name: req.body.name,
         phone:req.body.phone,
@@ -159,7 +77,7 @@ router.post("/CreateIndividuals", upload.single( 'profilePhoto' ), function (req
         occupation:req.body.occupation,
         work_place:req.body.work_place,
         profilePhoto:req.file.path,
-        TIN: getLGA(LGA) + tin
+        TIN: req.body.TIN
     }
 
     return Individuals.create( form )
