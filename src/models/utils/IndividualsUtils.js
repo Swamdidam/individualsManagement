@@ -56,38 +56,39 @@ exports.getIndividuals = (filter) => {
 
 exports.getAllIndividuals = () => {
     return Individuals.find({})
-        .then(result => {
-            if (!_.isEmpty(result)) {
-                return result;
-            }
-            else {
-                return false;
-            }
-        });
-}
+          .then(result => {
+              if (!_.isEmpty(result)) {
+                  return result;
+              }
+              else {
+                  return false;
+              }
+          });
+    }
 
 /*********************************************
  *   To update Individual records                                        *
  ********************************************/
 
 exports.updateIndividuals = (filter, update) => {
+
     if (_.isEmpty(filter) || _.isEmpty(update)) {
-        return Promise.reject(err);
+        return ({message:"missing fields"})
     }
     return Individuals.update(filter, update).exec()
         .then(result => {
             if (result.ok !== 1) {
-                return Promise.reject(err);
+                return ("update failed")
             }
             else if (result.nModified >= 0) {
                 return result;
             }
             else {
-                return Promise.reject(err)
+                return false
             }
         })
         .catch(err => {
-            return Promise.reject(err);
+            return ("Server error");
         });
 };
 
@@ -102,7 +103,7 @@ return Individuals.findOneAndRemove(filter)
      return ok   
     })
     .catch(err => {
-        return Promise.reject(err);
+        return false;
     });
 };
 

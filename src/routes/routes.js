@@ -81,7 +81,7 @@ router.put('/updateIndividuals', (req, res) => {
             return res.status(200).json(doc);
         })
         .catch(err => {
-            return res.status(error.code).json(error.msg);
+            return res.json(err);
         });
 
 });
@@ -126,10 +126,10 @@ router.post('/getIndividuals', (req, res) => {
 router.get('/getAllIndividuals', (req, res) => {
     return Individuals.getAllIndividuals({})
         .then(doc => {
-            return res.json({doc:doc});
+           return res.json({doc:doc});
         })
         .catch(err => {
-            return res.json({err:err});
+            return res.json({err:err, message: 'an error has occured'});
         });
   });
 
