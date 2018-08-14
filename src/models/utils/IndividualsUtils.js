@@ -11,15 +11,15 @@ const
     log             = require('../../utils/logger').getLogger('UsersUtils'),
     _               = require('lodash'),
     mongoose        = require('mongoose'),
-    Promise         = require('bluebird');
+    promise         = require('bluebird');
 
-/*********************************************
- *   To Create Individual records                                        *
- ********************************************/
+/***************************************************************************
+ *   To Create Individual records                                        
+ **************************************************************************/
 
 exports.createIndividuals = (doc) => {
     if (_.isEmpty(doc)) {
-        return Promise.reject(err);
+        return promise.reject("Please fill in all fields");
     }
     if (_.isArray(doc)) {
         return Individuals.insertMany(doc);
@@ -29,13 +29,13 @@ exports.createIndividuals = (doc) => {
     }
 };
 
-/*********************************************
- *   To find an Individual records                                        *
- ********************************************/
+/***************************************************************************
+    To find an Individual records                                        
+ **************************************************************************/
 
 exports.getIndividuals = (filter) => {
     if (_.isEmpty(filter)) {
-        return Promise.reject(err);
+        return promise.reject("Missing Fields");
     }
     return Individuals.find(filter)
         .exec()
@@ -47,12 +47,11 @@ exports.getIndividuals = (filter) => {
                 return false;
             }
         });
-
 };
 
-/*********************************************
- *   To find All records                                        *
- ********************************************/
+/***************************************************************************
+ *   To find All records                                        
+ **************************************************************************/
 
 exports.getAllIndividuals = () => {
     return Individuals.find({})
@@ -60,20 +59,19 @@ exports.getAllIndividuals = () => {
               if (!_.isEmpty(result)) {
                   return result;
               }
-              else {
+              else{
                   return false;
               }
           });
     }
-
-/*********************************************
- *   To update Individual records                                        *
- ********************************************/
+   
+/***************************************************************************
+    To update Individual records                                        
+ **************************************************************************/
 
 exports.updateIndividuals = (filter, update) => {
-
     if (_.isEmpty(filter) || _.isEmpty(update)) {
-        return ({message:"missing fields"})
+        return promise.reject("missing fields")
     }
     return Individuals.update(filter, update).exec()
         .then(result => {
@@ -93,17 +91,16 @@ exports.updateIndividuals = (filter, update) => {
 };
 
 /*********************************************
- *   To Delete Individual records                                        *
+    To Delete Individual records                                        *
  ********************************************/
 
-exports.deleteIndividuals = (filter, update) => {
-   
-return Individuals.findOneAndRemove(filter)
-    .then( ok  => {
-     return ok   
-    })
-    .catch(err => {
-        return false;
-    });
+exports.deleteIndividuals = (filter) => {
+    return Individuals.findOneAndRemove(filter)
+        .then(ok => {
+        return ok   
+        })
+        .catch(err => {
+            return false;
+        });
 };
 

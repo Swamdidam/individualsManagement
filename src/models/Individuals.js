@@ -62,7 +62,7 @@ const IndividualsSchema = new mongoose.Schema({
     },
     work_place: {
         type: String,
-        // required: [true, "please select work place name"],
+        // // required: [true, "please select work place name"],
         //enum: [ToDO]
     },
     occupation: {
@@ -72,6 +72,9 @@ const IndividualsSchema = new mongoose.Schema({
     profilePhoto: {
         type: String,
         // required: [true, "Please add profile photo"]
+    },
+    TIN:{
+        type: String
     }
     
  

@@ -5,9 +5,9 @@
  Modified by Swam Didam Bobby on 13/08/2018
 /********************************************************/
 
-/**
- * Dependencies
-*/
+/**************************************************************************
+        Importing Dependances
+ **************************************************************************/
 
 const
     express         = require( 'express' ),
@@ -20,9 +20,9 @@ const
     Individuals     = require( '../models/utils/IndividualsUtils' ) ,
     multer          = require( 'multer' );
 
-//***************************************************
-// Configuring image for upload as profile photo   
-//***************************************************
+/**************************************************************************
+ Configuring image for upload as profile photo   
+***************************************************************************/
 
 const storage  = multer.diskStorage( {
     destination: function( req, file, cb ) {
@@ -52,91 +52,94 @@ const upload = multer( {
 
 
 
-/**
- * Router instance
-*/
+/***********************************************************************************************
+        Router instance
+************************************************************************************************/
 
 const router = express.Router();
 
 router.post("/createIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
     return Individuals.createIndividuals( req.body )
         .then(doc => {
-            return res.status( 200 ).json( { message: "Individuals created",doc:doc } ) ;
+            console.log("Registration Successful");
+            return res.status(200).json(doc);
         })
         .catch(err=>{
-            return res.status( 500 ).json( { message: "Could not create Individuals", err: err } ) ;
+            console.log("Registration Failed");
+            return res.status(500).json( err ) ;
         })
-
-  
 });
 
-//=============================================================================================
-// Individuals Update router
-//=============================================================================================
-
+/***********************************************************************************************
+       Updating Individual Tax payers 
+************************************************************************************************/
 
 router.put('/updateIndividuals', (req, res) => {
     return Individuals.updateIndividuals(req.body.filter, req.body.update)
         .then(doc => {
+            console.log("Details Update Successful");
             return res.status(200).json(doc);
         })
         .catch(err => {
-            return res.json(err);
+            console.log("Details Update Failed");
+            return res.status(500).json(err);
         });
-
 });
 
-
-//=============================================================================================
-// Delete Individuals router
-//=============================================================================================
-
+/***********************************************************************************************
+       Deleting Individual Tax payers 
+************************************************************************************************/
 
 router.delete('/deleteIndividuals', (req, res) => {
     return Individuals.deleteIndividuals( req.body )
         .then(ok => {
-            return res.json( { message: "Individuals' deleted" } );
+            console.log("Successfully deleted Account");
+            return res.status(200).json(ok);
         })
         .catch(err => {
-            return res.json( err ) ;
+            console.log("Account Deletion failed");
+            return res.status(500).json(err) ;
 
         });
 });
 
 
-//=============================================================================================
-// Searching for a particular Individualss
-//=============================================================================================
+/***********************************************************************************************
+        Searching for a particular Individualss
+************************************************************************************************/
 
 router.post('/getIndividuals', (req, res) => {
 
     return Individuals.getIndividuals(req.body)
         .then(doc => {
-           return res.json(doc);
+            console.log("Search successful");
+            return res.status(200).json(doc);
         })
         .catch(err => {
-            return res.json({err:err});
+            console.log("Search Failed");
+            return res.status(500).json(err);
         });
 });
 
-//=============================================================================================
-// Search all registered Individualss
-//=============================================================================================
+/***********************************************************************************************
+        Viewing all registered Individualss
+************************************************************************************************/
 
 router.get('/getAllIndividuals', (req, res) => {
     return Individuals.getAllIndividuals({})
         .then(doc => {
-           return res.json({doc:doc});
+            console.log("Search Successful");
+            return res.status(200).json(doc);
         })
         .catch(err => {
-            return res.json({err:err, message: 'an error has occured'});
+            console.log("Search Failed");
+            return res.status(500).json(err);
         });
   });
 
   
-//=============================================================================
-/**
-* Module export
-*/
-//=============================================================================
+/***********************************************************************************************
+       Exporting router
+************************************************************************************************/
+
 module.exports = router;
