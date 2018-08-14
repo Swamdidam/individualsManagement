@@ -14,7 +14,7 @@ const
     promise         = require('bluebird');
 
 /***************************************************************************
- *   To Create Individual records                                        
+    To Create Individual records                                        
  **************************************************************************/
 
 exports.createIndividuals = (doc) => {

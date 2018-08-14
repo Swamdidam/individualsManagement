@@ -1,3 +1,3 @@
-PORT = 3000
-NODE_ENV = your choice
-DBURL = mongodb://localhost/your db details
+PORT = Your Choice
+NODE_ENV = Your Choice
+DBURL = mongodb://your DataBase URL
