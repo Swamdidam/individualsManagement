@@ -38,12 +38,10 @@ const IndividualsSchema = new mongoose.Schema({
     },
     LGA: {
         type: String,
-        // ToDo  enum: ["Abia","Plateau"],
         required: [true, "Please select State"]
     },
     state: {
         type: String,
-        // ToDo  enum: ["Abia","Plateau"],
         required: [true, "Please select State"]
     },
     nationality: {
@@ -58,12 +56,10 @@ const IndividualsSchema = new mongoose.Schema({
     empStatus: {
         type: String,
         required: [true, "Please select Employment status"],
-        // ToDo enum: ["Self-employed", "Employed"]
     },
     workPlace: {
         type: String,
         required: [true, "please select work place name"],
-        //enum: [ToDO]
     },
     occupation: {
         type: String,
