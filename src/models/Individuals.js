@@ -18,60 +18,60 @@ const IndividualsSchema = new mongoose.Schema({
     
     name: {
         type: String,
-        // required: [true, "Please enter a valid email address"],
+        required: [true, "Please enter a valid email address"],
     },
     phone: {
         type: String,
-        // required: [true, "Please add a password 11 digit minimum"],
+        required: [true, "Please add a password 11 digit minimum"],
     },
     DOB: {
         type: String,
-        // required: [true, "please fill in your age"]
+        required: [true, "please fill in your age"]
     },
     title: {
         type: String,
-        // enum: ["Mr", "Mrs", "Ms", "Mallam"]
+        enum: ["Mr", "Mrs", "Ms", "Mallam"]
     },
-    res_address: {
+    resAddress: {
         type: String,
-        // required: [true, "residential address is required"]
+        required: [true, "residential address is required"]
     },
     LGA: {
         type: String,
         // ToDo  enum: ["Abia","Plateau"],
-        // required: [true, "Please select State"]
+        required: [true, "Please select State"]
     },
     state: {
         type: String,
         // ToDo  enum: ["Abia","Plateau"],
-        // required: [true, "Please select State"]
+        required: [true, "Please select State"]
     },
     nationality: {
         type: String,
-        // required: [true, "Nationality required"]
+        required: [true, "Nationality required"]
     },
     gender: {
         type: String,
-        // required: [true, "Select Gender"],
-        // enum: ["Male", "Female", "Others"]
+        required: [true, "Select Gender"],
+        enum: ["Male", "Female", "Others"]
     },
-    emp_status: {
+    empStatus: {
         type: String,
-        // required: [true, "Please select Employment status"],
-        // enum: ["Self-employed", "Employed"]
+        required: [true, "Please select Employment status"],
+        // ToDo enum: ["Self-employed", "Employed"]
     },
-    work_place: {
+    workPlace: {
         type: String,
-        // // required: [true, "please select work place name"],
+        required: [true, "please select work place name"],
         //enum: [ToDO]
     },
     occupation: {
         type: String,
-        // required: [true, "Please add occupation"]
+        required: [true, "Please add occupation"]
     },
     profilePhoto: {
         type: String,
-        // required: [true, "Please add profile photo"]
+        required: [true, "Please add profile photo"]
     },
     TIN:{
         type: String
