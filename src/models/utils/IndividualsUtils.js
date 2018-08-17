@@ -21,7 +21,7 @@ exports.createIndividuals = (doc) => {
     if (_.isEmpty(doc)) {
         return promise.reject("Please fill in all fields");
     }
-    if (_.isArray(doc)) {
+    else if (_.isArray(doc)) {
         return Individuals.insertMany(doc);
     }
     else {

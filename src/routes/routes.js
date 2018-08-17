@@ -50,23 +50,21 @@ const upload = multer( {
     fileFilter: fileFilter 
 } );
 
-
-
 /***********************************************************************************************
         Router instance
 ************************************************************************************************/
 
 const router = express.Router();
 
-router.post("/createIndividuals", upload.single( 'profilePhoto' ), function (req, res) {
-    return Individuals.createIndividuals( req.body )
+router.post("/createIndividuals", function (req, res) {
+    return Individuals.createIndividuals(req.body)
         .then(doc => {
             console.log("Registration Successful");
             return res.status(200).json(doc);
         })
         .catch(err=>{
             console.log("Registration Failed");
-            return res.status(500).json( err ) ;
+            return res.status(500).json(err) ;
         })
 });
 
