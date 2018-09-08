@@ -64,10 +64,9 @@ const IndividualsSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add occupation"]
     },
-    // profilePhoto: {
-    //     type: String,
-        // required: [true, "Please add profile photo"]
-    // },
+    profilePhoto: {
+        type: String,
+    },
     TIN:{
         type: String
     }
