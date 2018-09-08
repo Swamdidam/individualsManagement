@@ -18,55 +18,55 @@ const IndividualsSchema = new mongoose.Schema({
     
     name: {
         type: String,
-        // required: [true, "Name is required"],
+        required: [true, "Name is required"],
     },
     phone: {
         type: String,
-        // required: [true, "Phone number is required"],
+        required: [true, "Phone number is required"],
     },
     DOB: {
         type: String,
-        // required: [true, "DOB is required"]
+        required: [true, "DOB is required"]
     },
     title: {
         type: String,
     },
     resAddress: {
         type: String,
-        // required: [true, "residential address is required"]
+        required: [true, "residential address is required"]
     },
     LGA: {
         type: String,
-        // required: [true, "Please select LGA"]
+        required: [true, "Please select LGA"]
     },
     state: {
         type: String,
-        // required: [true, "Please select State"]
+        required: [true, "Please select State"]
     },
     nationality: {
         type: String,
-        // required: [true, "Nationality required"]
+        required: [true, "Nationality required"]
     },
     gender: {
         type: String,
-        // required: [true, "Select Gender"],
+        required: [true, "Select Gender"],
         enum: ["Male", "Female", "Others"]
     },
     empStatus: {
         type: String,
-        // required: [true, "Please select Employment status"],
+        required: [true, "Please select Employment status"],
     },
     workPlace: {
         type: String,
-        // required: [true, "please select work place name"],
+        required: [true, "please select work place name"],
     },
     occupation: {
         type: String,
-        // required: [true, "Please add occupation"]
+        required: [true, "Please add occupation"]
     },
     // profilePhoto: {
     //     type: String,
-    //     // required: [true, "Please add profile photo"]
+        // required: [true, "Please add profile photo"]
     // },
     TIN:{
         type: String
